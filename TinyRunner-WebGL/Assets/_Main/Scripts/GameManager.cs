@@ -1,16 +1,19 @@
 using PrimeTween;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] private GameConfig _gameConfig;
+
     [Header("Camera Settings")]
     [SerializeField] private Transform _cameraTransform;
-    [SerializeField] private float _cameraOffsetX;
 
     [Header("Player Settings")]
     [SerializeField] private Transform _playerTransform;
     [SerializeField] private PlayerCollision _playerCollision;
+    [SerializeField] private SpriteRenderer _playerRenderer;
 
     [Header("Input Settings")]
     [SerializeField] private InputArea _inputArea;
@@ -18,38 +21,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] private InputArea _restartArea;
     [SerializeField] private InputArea _continueArea;
 
-    [Header("Line Switch Settings")]
-    [SerializeField] private float _topYPosition;
-    [SerializeField] private float _downYPosition;
-
-    [Header("Animation Settings")]
-    [SerializeField] private float _switchAnimationDuration;
-    [SerializeField] private Ease _switchAnimationEase;
-    [SerializeField] private AnimationCurve _jumpCurve;
-    [SerializeField] private float _jumpDuration;
-
-    [Header("Speed Settings")]
-    [SerializeField] private float _startSpeed;
-    [SerializeField] private float _acceleration;
-    [SerializeField] private float _accelerationTime;
-
-    [Header("Level Settings")]
-    [SerializeField] private float _chunkLength;
-    [SerializeField] private Chunk[] _chunks;
-    [SerializeField] private int _chunksCount;
-
-    [Header("Score Settings")]
-    [SerializeField] private int _additionScore;
-    [SerializeField] private float _additionScoreTime;
-
     [Header("UI Settings")]
     [SerializeField] private UIManager _uiManager;
 
     private Player _player;
     private CameraFollow _cameraFollow;
-    private SpeedManager _speedManager;
+    private SpeedService _speedManager;
     private LevelManager _levelManager;
-    private ScoreManager _scoreManager;
+    private ScoreService _scoreManager;
+    private ColorManager _colorManager;
 
     private GameState _gameState = GameState.Menu;
 
@@ -57,16 +37,44 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        _player = new(_inputArea, _playerTransform, _topYPosition, _downYPosition, _switchAnimationDuration, _switchAnimationEase, _jumpCurve, _jumpDuration);
-        _cameraFollow = new(_playerTransform, _cameraTransform, _cameraOffsetX);
-        _levelManager = new(_chunkLength);
-        _speedManager = new(_player, _startSpeed, _acceleration, _accelerationTime);
-        _scoreManager = new(_additionScore, _additionScoreTime, _uiManager);
+        _player = new(_inputArea,
+            _playerTransform,
+            _gameConfig.TopYPosition,
+            _gameConfig.DownYPosition,
+            _gameConfig.SwitchAnimationDuration,
+            _gameConfig.SwitchAnimationEase,
+            _gameConfig.JumpCurve,
+            _gameConfig.JumpDuration);
 
-        _levelManager.InitializePool(_chunks, _chunksCount);
+        _cameraFollow = new(_playerTransform,
+            _cameraTransform,
+            _gameConfig.CameraOffsetX);
+
+        _levelManager = new(_gameConfig.ChunkLength);
+
+        _speedManager = new(_player,
+            _gameConfig.StartSpeed,
+            _gameConfig.Acceleration,
+            _gameConfig.AccelerationTime);
+
+        _scoreManager = new(_gameConfig.AdditionScore,
+            _gameConfig.AdditionScoreTime,
+            _uiManager);
+
+        _levelManager.InitializePool(_gameConfig.Chunks,
+            _gameConfig.ChunksRepeat,
+            out List<SpriteRenderer> renderers);
+
         _player.Initialize();
-        _player.SetMoveSpeed(_startSpeed);
+        _player.SetMoveSpeed(_gameConfig.StartSpeed);
         _playerCollision.Initialize(_player, this);
+        renderers.Add(_playerRenderer);
+
+        _colorManager = new(_gameConfig.ColorTransitionDuration,
+            _gameConfig.ColorSwitchDelay,
+            _gameConfig.Colors,
+            renderers,
+            _uiManager.Images);
     }
 
     private void OnEnable()
@@ -95,6 +103,8 @@ public class GameManager : MonoBehaviour
 
         _uiManager.SetActiveMenuUI(false);
         _uiManager.SetActiveGameUI(true);
+        _uiManager.SetActivePauseUI(false);
+        _uiManager.SetActivePlayingUI(true);
         _uiManager.SetActiveGameOverUI(false);
     }
 
@@ -129,6 +139,7 @@ public class GameManager : MonoBehaviour
         _levelManager?.ClearLevel();
         _speedManager?.ResetSpeed();
         _scoreManager?.ResetScore();
+        _colorManager?.ResetColor();
 
         _uiManager.SetActiveMenuUI(true);
         _uiManager.SetActiveGameUI(false);
@@ -138,22 +149,28 @@ public class GameManager : MonoBehaviour
     {
         switch (_gameState)
         {
-            case GameState.Menu:
-                break;
             case GameState.Playing:
                 MovePlayer();
                 CameraFollow();
                 SpeedUpdate();
                 AddScore();
-                break;
-            case GameState.Paused:
+                UpdateColor();
                 break;
             case GameState.GameOver:
+                _uiManager.PulseGameOverTips();
+                break;
+            case GameState.Paused:
+                _uiManager.PulsePauseTips();
+                break;
+            case GameState.Menu:
+                _uiManager.PulseMenuTips();
                 break;
         }
     }
 
-    private void AddScore() => _scoreManager.Update();
+    private void UpdateColor() => _colorManager?.Update();
+
+    private void AddScore() => _scoreManager?.Update();
 
     private void CameraFollow() => _cameraFollow?.Follow();
 
@@ -166,10 +183,10 @@ public class GameManager : MonoBehaviour
         _player.Move(out float offset);
         _traveledDistance += offset;
 
-        if (_traveledDistance >= _chunkLength)
+        if (_traveledDistance >= _gameConfig.ChunkLength)
         {
-            _traveledDistance -= _chunkLength;
-            _levelManager.SpawnChunk();
+            _traveledDistance -= _gameConfig.ChunkLength;
+            _levelManager?.SpawnChunk();
         }
     }
 }

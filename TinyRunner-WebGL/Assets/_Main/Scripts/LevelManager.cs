@@ -38,14 +38,17 @@ public class LevelManager
         }
     }
 
-    public void InitializePool(Chunk[] chunks, int chunkCount)
+    public void InitializePool(Chunk[] chunks, int chunkCount, out List<SpriteRenderer> renderers)
     {
+        renderers = new();
+
         for (int i = 0; i < chunks.Length; i++)
         {
             for (int j = 0; j < chunkCount; j++)
             {
                 var chunk = Object.Instantiate(chunks[i]);
                 chunk.Initialize();
+                renderers.AddRange(chunk.GetComponentsInChildren<SpriteRenderer>());
                 chunk.gameObject.SetActive(false);
                 _deactiveChunks.Add(chunk);
             }

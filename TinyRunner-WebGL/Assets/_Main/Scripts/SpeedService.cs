@@ -1,7 +1,17 @@
 using UnityEngine;
 
-public class SpeedManager
+public class SpeedService
 {
+    public float CurrentSpeed
+    {
+        get => _currentSpeed;
+        private set
+        {
+            _currentSpeed = value;
+            _player.SetMoveSpeed(_currentSpeed);
+        }
+    }
+
     private readonly Player _player;
     private readonly float _startSpeed;
     private readonly float _acceleration;
@@ -10,14 +20,12 @@ public class SpeedManager
     private float _accelerationTimer;
     private float _currentSpeed;
 
-    public SpeedManager(Player player, float startSpeed, float acceleration, float accelerationTime)
+    public SpeedService(Player player, float startSpeed, float acceleration, float accelerationTime)
     {
         _player = player;
         _startSpeed = startSpeed;
         _acceleration = acceleration;
         _accelerationTime = accelerationTime;
-
-        _currentSpeed = _startSpeed;
     }
 
     public void Update()
@@ -31,15 +39,7 @@ public class SpeedManager
         }
     }
 
-    public void ResetSpeed()
-    {
-        _currentSpeed = _startSpeed;
-        _player.SetMoveSpeed(_currentSpeed);
-    }
+    public void ResetSpeed() => CurrentSpeed = _startSpeed;
 
-    private void UpdateSpeed()
-    {
-        _currentSpeed += _acceleration;
-        _player.SetMoveSpeed(_currentSpeed);
-    }
+    private void UpdateSpeed() => CurrentSpeed += _acceleration;
 }
