@@ -1,10 +1,16 @@
-using PrimeTween;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public Player Player {  get; private set; }
+    public CameraFollow CameraFollow { get; private set; }
+    public SpeedService SpeedService { get; private set; }
+    public LevelService LevelService { get; private set; }
+    public ScoreService ScoreService { get; private set; }
+    public ColorService ColorService { get; private set; }
+    public CoinService CoinService { get; private set; }
+
     [SerializeField] private GameConfig _gameConfig;
 
     [Header("Camera Settings")]
@@ -13,6 +19,7 @@ public class GameManager : MonoBehaviour
     [Header("Player Settings")]
     [SerializeField] private Transform _playerTransform;
     [SerializeField] private PlayerCollision _playerCollision;
+    [SerializeField] private PlayerVisual _playerVisual;
     [SerializeField] private SpriteRenderer _playerRenderer;
 
     [Header("Input Settings")]
@@ -24,12 +31,6 @@ public class GameManager : MonoBehaviour
     [Header("UI Settings")]
     [SerializeField] private UIManager _uiManager;
 
-    private Player _player;
-    private CameraFollow _cameraFollow;
-    private SpeedService _speedManager;
-    private LevelManager _levelManager;
-    private ScoreService _scoreManager;
-    private ColorManager _colorManager;
 
     private GameState _gameState = GameState.Menu;
 
@@ -37,7 +38,9 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        _player = new(_inputArea,
+        CoinService = new(_uiManager);
+
+        Player = new(_inputArea,
             _playerTransform,
             _gameConfig.TopYPosition,
             _gameConfig.DownYPosition,
@@ -46,35 +49,36 @@ public class GameManager : MonoBehaviour
             _gameConfig.JumpCurve,
             _gameConfig.JumpDuration);
 
-        _cameraFollow = new(_playerTransform,
+        CameraFollow = new(_playerTransform,
             _cameraTransform,
             _gameConfig.CameraOffsetX);
 
-        _levelManager = new(_gameConfig.ChunkLength);
+        LevelService = new(_gameConfig.ChunkLength);
 
-        _speedManager = new(_player,
+        SpeedService = new(Player,
             _gameConfig.StartSpeed,
             _gameConfig.Acceleration,
             _gameConfig.AccelerationTime);
 
-        _scoreManager = new(_gameConfig.AdditionScore,
+        ScoreService = new(_gameConfig.AdditionScore,
             _gameConfig.AdditionScoreTime,
             _uiManager);
 
-        _levelManager.InitializePool(_gameConfig.Chunks,
+        LevelService.Initialize(_gameConfig.Chunks,
             _gameConfig.ChunksRepeat,
             out List<SpriteRenderer> renderers);
 
-        _player.Initialize();
-        _player.SetMoveSpeed(_gameConfig.StartSpeed);
-        _playerCollision.Initialize(_player, this);
+        Player.Initialize();
+        Player.SetMoveSpeed(_gameConfig.StartSpeed);
+        _playerCollision.Initialize(this);
         renderers.Add(_playerRenderer);
 
-        _colorManager = new(_gameConfig.ColorTransitionDuration,
+        ColorService = new(_gameConfig.ColorTransitionDuration,
             _gameConfig.ColorSwitchDelay,
             _gameConfig.Colors,
             renderers,
-            _uiManager.Images);
+            _uiManager.Images, _uiManager.GetTMPs());
+
     }
 
     private void OnEnable()
@@ -99,7 +103,10 @@ public class GameManager : MonoBehaviour
     private void StartGame()
     {
         _gameState = GameState.Playing;
-        _levelManager.SpawnChunk();
+        LevelService.SpawnChunk();
+        LevelService.SpawnChunk();
+
+        _playerVisual.ActivateTrail();
 
         _uiManager.SetActiveMenuUI(false);
         _uiManager.SetActiveGameUI(true);
@@ -126,6 +133,8 @@ public class GameManager : MonoBehaviour
     {
         _gameState = GameState.GameOver;
 
+        _playerVisual.Death();
+
         _uiManager.SetActivePauseUI(false);
         _uiManager.SetActivePlayingUI(false);
         _uiManager.SetActiveGameOverUI(true);
@@ -134,12 +143,15 @@ public class GameManager : MonoBehaviour
     public void RestartGame()
     {
         _gameState = GameState.Menu;
-        _player?.MoveToStartPoint();
-        _cameraFollow?.Follow();
-        _levelManager?.ClearLevel();
-        _speedManager?.ResetSpeed();
-        _scoreManager?.ResetScore();
-        _colorManager?.ResetColor();
+        Player?.MoveToStartPoint();
+        CameraFollow?.Follow();
+        LevelService?.ClearLevel();
+        SpeedService?.ResetSpeed();
+        ScoreService?.ResetScore();
+        ColorService?.ResetColor();
+
+        _playerVisual.Revert();
+        _playerVisual.DeactivateTrail();
 
         _uiManager.SetActiveMenuUI(true);
         _uiManager.SetActiveGameUI(false);
@@ -151,7 +163,7 @@ public class GameManager : MonoBehaviour
         {
             case GameState.Playing:
                 MovePlayer();
-                CameraFollow();
+                CameraFollowing();
                 SpeedUpdate();
                 AddScore();
                 UpdateColor();
@@ -168,25 +180,25 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void UpdateColor() => _colorManager?.Update();
+    private void UpdateColor() => ColorService?.Update();
 
-    private void AddScore() => _scoreManager?.Update();
+    private void AddScore() => ScoreService?.Update();
 
-    private void CameraFollow() => _cameraFollow?.Follow();
+    private void CameraFollowing() => CameraFollow?.Follow();
 
-    private void SpeedUpdate() => _speedManager?.Update();
+    private void SpeedUpdate() => SpeedService?.Update();
 
     private void MovePlayer()
     {
-        if (_player == null) return;
+        if (Player == null) return;
 
-        _player.Move(out float offset);
+        Player.Move(out float offset);
         _traveledDistance += offset;
 
         if (_traveledDistance >= _gameConfig.ChunkLength)
         {
             _traveledDistance -= _gameConfig.ChunkLength;
-            _levelManager?.SpawnChunk();
+            LevelService?.SpawnChunk();
         }
     }
 }

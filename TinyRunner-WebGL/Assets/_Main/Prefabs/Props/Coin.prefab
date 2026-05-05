@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8527738789618961994}
   - component: {fileID: 7014050677548643344}
   - component: {fileID: 7880239083003987150}
+  - component: {fileID: 7836311696853035382}
   m_Layer: 0
   m_Name: Coin
   m_TagString: Coin
@@ -128,3 +129,16 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.4
+--- !u!114 &7836311696853035382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6696346239648448097}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47e75db61dadfb348870d2f0fdc217e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Collectable
+  _animationDuration: 0.15

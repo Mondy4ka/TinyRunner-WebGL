@@ -2,14 +2,9 @@ using UnityEngine;
 
 public class PlayerCollision : MonoBehaviour
 {
-    private Player _player;
     private GameManager _gameManager;
 
-    public void Initialize(Player player, GameManager gameManager)
-    {
-        _player = player;
-        _gameManager = gameManager;
-    }
+    public void Initialize(GameManager gameManager) => _gameManager = gameManager;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -21,13 +16,13 @@ public class PlayerCollision : MonoBehaviour
 
         if (collision.CompareTag("JumpPad"))
         {
-            StartCoroutine(_player.Jump());
+            StartCoroutine(_gameManager.Player.Jump());
             return;
         }
 
-        if (collision.CompareTag("Ghost"))
+        if (collision.CompareTag("Coin"))
         {
-            collision.GetComponent<GhostSpike>().HideSpike();
+            _gameManager.CoinService.AddCoins(1);
             return;
         }
     }

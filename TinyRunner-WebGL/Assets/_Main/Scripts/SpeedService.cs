@@ -9,6 +9,7 @@ public class SpeedService
         {
             _currentSpeed = value;
             _player.SetMoveSpeed(_currentSpeed);
+            Debug.Log($"Speed changed from {_currentSpeed} to {value} at Time: {Time.time}");
         }
     }
 
@@ -26,6 +27,8 @@ public class SpeedService
         _startSpeed = startSpeed;
         _acceleration = acceleration;
         _accelerationTime = accelerationTime;
+
+        ResetSpeed();
     }
 
     public void Update()

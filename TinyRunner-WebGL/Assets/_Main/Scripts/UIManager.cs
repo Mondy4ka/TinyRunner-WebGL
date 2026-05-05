@@ -9,6 +9,9 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] private TMP_Text _scoreText;
     [SerializeField] private TMP_Text _bestScoreText;
+    [SerializeField] private TMP_Text _coinsText;
+    [SerializeField] private TMP_Text _gameOverHeaderText;
+    [SerializeField] private TMP_Text _pauseHeaderText;
 
     [SerializeField] private float _pulseSpeed;
     [SerializeField] private TMP_Text _continueTipText;
@@ -23,6 +26,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject _playingUI;
     [SerializeField] private GameObject _pauseUI;
     [SerializeField] private GameObject _gameOverUI;
+
+    public List<TMP_Text> GetTMPs() => new() { _pauseHeaderText, _gameOverHeaderText, _scoreText, _bestScoreText, _coinsText, _continueTipText, _exitTipText, _startTipText, _restartTipText };
 
     public void PulsePauseTips()
     {
@@ -59,6 +64,8 @@ public class UIManager : MonoBehaviour
 
         _startTipText.color = newColor1;
     }
+
+    public void UpdateCoinsText(int coins) => _coinsText.SetText($"Coins: {coins}");
 
     public void UpdateScoreText(int newScore) => _scoreText.SetText($"Score: {newScore}");
 

@@ -138,6 +138,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6361029211579165137}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36db7d747672c214f8a3e2a23c9348f0, type: 3}
+  m_Script: {fileID: 11500000, guid: 47e75db61dadfb348870d2f0fdc217e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GhostSpike
+  _animationDuration: 0.15
