@@ -11,17 +11,14 @@ public class LevelService
 
     public LevelService(float chunkLength) => _chunkLength = chunkLength;
 
-    public void Initialize(Chunk[] chunks, int chunkRepeat, out List<SpriteRenderer> renderers)
+    public void Initialize(Chunk[] chunks, int chunkRepeat)
     {
-        renderers = new();
-
         for (int i = 0; i < chunks.Length; i++)
         {
             for (int j = 0; j < chunkRepeat; j++)
             {
                 Chunk chunk = Object.Instantiate(chunks[i]);
                 chunk.Initialize();
-                renderers.AddRange(chunk.GetComponentsInChildren<SpriteRenderer>());
                 chunk.gameObject.SetActive(false);
                 _deactiveChunks.Add(chunk);
             }

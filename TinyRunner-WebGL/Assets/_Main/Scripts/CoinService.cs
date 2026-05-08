@@ -1,4 +1,5 @@
 using UnityEngine;
+using YG;
 
 public class CoinService
 {
@@ -9,6 +10,9 @@ public class CoinService
         {
             _coins = Mathf.Max(value, 0);
             _uiManager.UpdateCoinsText(_coins);
+
+            YG2.saves.Coins = _coins;
+            YG2.SaveProgress();
         }
     }
 
@@ -17,6 +21,8 @@ public class CoinService
     private int _coins;
 
     public CoinService(UIManager uiManager) => _uiManager = uiManager;
+
+    public void LoadCoins(int coins) => Coins = coins;
 
     public void AddCoins(int count) => Coins += count;
 

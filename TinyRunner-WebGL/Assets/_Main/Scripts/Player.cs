@@ -33,6 +33,7 @@ public class Player
     private bool _isTopPosition = true;
     private bool _isBlocked = false;
     private bool _isJumping;
+    private bool _isJumpInterrupted;
 
     public Player(InputArea inputArea, Transform transform, float topYPosition, float downYPosition, float switchAnimationDuration, Ease switchAnimationEase, AnimationCurve animationCurve, float jumpDuration)
     {
@@ -80,6 +81,12 @@ public class Player
 
     public void SwitchLine()
     {
+        if (_isJumping)
+        {
+            InterruptJump();
+            return;
+        }
+
         if (_isBlocked || _isJumping) return;
 
         _isBlocked = true;
@@ -96,20 +103,46 @@ public class Player
         if (_isBlocked || _isJumping) yield return null;
 
         _isJumping = true;
+        _isJumpInterrupted = false;
         JumpTimer = 0.0f;
 
         while (_isJumping)
         {
             JumpTimer += Time.deltaTime;
 
+            if (_isJumpInterrupted)
+            {
+                FinishJumpEarly();
+                yield break;
+            }
+
             float newPositionY = _animationCurve.Evaluate(JumpTimer);
 
             Vector2 newPos = _transform.position;
             newPos.y = _isTopPosition ? newPositionY : -newPositionY;
-
             _transform.position = newPos;
 
             yield return null;
         }
+    }
+
+    public void InterruptJump()
+    {
+        if (!_isJumping) return;
+        _isJumpInterrupted = true;
+    }
+
+    private void FinishJumpEarly()
+    {
+        float targetY = _isTopPosition ? _topYPosition : _downYPosition;
+
+        _isJumping = false;
+        _isJumpInterrupted = false;
+        _isBlocked = true;
+
+        Tween.PositionY(_transform, targetY, 0.1f, Ease.InCubic)
+            .OnComplete(() => {
+                _isBlocked = false;
+            });
     }
 }

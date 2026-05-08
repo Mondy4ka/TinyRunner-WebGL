@@ -2,10 +2,12 @@ using UnityEngine;
 
 public class Chunk : MonoBehaviour
 {
-    [SerializeField] private Collectable[] _collectables;
+    private Collectable[] _collectables;
 
     public void Initialize()
     {
+        _collectables = GetComponentsInChildren<Collectable>();
+
         if (_collectables.Length <= 0) return;
 
         for (int i = 0; i < _collectables.Length; i++)

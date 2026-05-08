@@ -31,7 +31,7 @@ MonoBehaviour:
       outWeight: 0.10522981
     - serializedVersion: 3
       time: 0.25
-      value: 1.75
+      value: 2
       inSlope: -0.012983492
       outSlope: -0.012983492
       tangentMode: 0
@@ -69,15 +69,14 @@ MonoBehaviour:
   ChunksRepeat: 1
   AdditionScore: 10
   AdditionScoreTime: 1
-  Colors:
-  - {r: 1, g: 1, b: 1, a: 1}
-  - {r: 0.3607843, g: 0.8498961, b: 1, a: 1}
-  - {r: 0.40870127, g: 1, b: 0.3607843, a: 1}
-  - {r: 1, g: 0.9914434, b: 0.3607843, a: 1}
-  - {r: 1, g: 0.6951869, b: 0.3607843, a: 1}
-  - {r: 1, g: 0.36199498, b: 0.3607843, a: 1}
-  - {r: 1, g: 0.3607843, b: 0.95266, a: 1}
-  - {r: 0.74619186, g: 0.3607843, b: 1, a: 1}
-  - {r: 0.3607843, g: 0.39584076, b: 1, a: 1}
-  ColorSwitchDelay: 60
-  ColorTransitionDuration: 3
+  Skins:
+  - {fileID: 11400000, guid: 7372e3212ee68fa44badc116b3b95624, type: 2}
+  - {fileID: 11400000, guid: 631b44c234bcae4419befdc94a7bc46e, type: 2}
+  - {fileID: 11400000, guid: 7deaa7e02631aac4e8a889a65c14141d, type: 2}
+  - {fileID: 11400000, guid: b57b75f2929a2aa46a30c3d5c0b72171, type: 2}
+  - {fileID: 11400000, guid: e24b825076034e34481e61a7eadf64f3, type: 2}
+  - {fileID: 11400000, guid: 54af7e918053d824e97b5e4a4c658115, type: 2}
+  - {fileID: 11400000, guid: 3357a0c00965b054e9c8ded60f0f2b4f, type: 2}
+  - {fileID: 11400000, guid: 19058088921ce5e40b17fb8bca09d780, type: 2}
+  - {fileID: 11400000, guid: 7c22faf8cc569a247959d85ec347dd6e, type: 2}
+  SkinCellPrefab: {fileID: 5778900193430321079, guid: 4f05218fd74b67242ba07bed1e1a8af9, type: 3}

@@ -32,8 +32,7 @@ public class GameConfig : ScriptableObject
     public int AdditionScore;
     public float AdditionScoreTime;
 
-    [Header("Color Settings")]
-    public List<Color> Colors;
-    public float ColorSwitchDelay;
-    public float ColorTransitionDuration;
+    [Header("Shop Settings")]
+    public List<Skin> Skins;
+    public SkinCell SkinCellPrefab;
 }

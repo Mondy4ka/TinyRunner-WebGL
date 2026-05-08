@@ -1,0 +1,15 @@
+{
+    "intExample": 5,
+    "strExample": "Hello!",
+    "boolExample": [
+        false,
+        false,
+        false,
+        false
+    ],
+    "idSave": 11,
+    "Coins": 0,
+    "BestScore": 0,
+    "EquippedSkin": "Skin",
+    "UnlockedSkins": []
+}

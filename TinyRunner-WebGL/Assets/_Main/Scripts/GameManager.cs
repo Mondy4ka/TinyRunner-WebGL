@@ -1,15 +1,21 @@
-using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
+using YG;
 
 public class GameManager : MonoBehaviour
 {
-    public Player Player {  get; private set; }
+    public Player Player { get; private set; }
     public CameraFollow CameraFollow { get; private set; }
     public SpeedService SpeedService { get; private set; }
     public LevelService LevelService { get; private set; }
     public ScoreService ScoreService { get; private set; }
-    public ColorService ColorService { get; private set; }
     public CoinService CoinService { get; private set; }
+    public ShopService ShopService { get; private set; }
+
+    [Header("Shop Settings")]
+    [SerializeField] private Transform _shopCellsParent;
+    [SerializeField] private InputArea _openShopArea;
+    [SerializeField] private InputArea _closeShopArea;
 
     [SerializeField] private GameConfig _gameConfig;
 
@@ -20,7 +26,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Transform _playerTransform;
     [SerializeField] private PlayerCollision _playerCollision;
     [SerializeField] private PlayerVisual _playerVisual;
-    [SerializeField] private SpriteRenderer _playerRenderer;
 
     [Header("Input Settings")]
     [SerializeField] private InputArea _inputArea;
@@ -38,8 +43,6 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        CoinService = new(_uiManager);
-
         Player = new(_inputArea,
             _playerTransform,
             _gameConfig.TopYPosition,
@@ -64,21 +67,30 @@ public class GameManager : MonoBehaviour
             _gameConfig.AdditionScoreTime,
             _uiManager);
 
-        LevelService.Initialize(_gameConfig.Chunks,
-            _gameConfig.ChunksRepeat,
-            out List<SpriteRenderer> renderers);
+        CoinService = new(_uiManager);
 
+        ShopService = new(_gameConfig.Skins,
+            _gameConfig.SkinCellPrefab,
+            _shopCellsParent,
+            _playerVisual,
+            CoinService);
+
+        LevelService.Initialize(_gameConfig.Chunks, _gameConfig.ChunksRepeat);
+        ShopService.Initialize();
         Player.Initialize();
         Player.SetMoveSpeed(_gameConfig.StartSpeed);
         _playerCollision.Initialize(this);
-        renderers.Add(_playerRenderer);
 
-        ColorService = new(_gameConfig.ColorTransitionDuration,
-            _gameConfig.ColorSwitchDelay,
-            _gameConfig.Colors,
-            renderers,
-            _uiManager.Images, _uiManager.GetTMPs());
+        StartCoroutine(LoadSaves());
+    }
 
+    private IEnumerator LoadSaves()
+    {
+        while (YG2.isSDKEnabled == false) yield return null;
+
+        CoinService.LoadCoins(YG2.saves.Coins);
+        ScoreService.LoadBestScore(YG2.saves.BestScore);
+        ShopService.LoadSkins(YG2.saves.UnlockedSkins, YG2.saves.EquippedSkin);
     }
 
     private void OnEnable()
@@ -86,6 +98,8 @@ public class GameManager : MonoBehaviour
         _startArea.OnClick += StartGame;
         _continueArea.OnClick += ContinueGame;
         _restartArea.OnClick += RestartGame;
+        _openShopArea.OnClick += OpenShop;
+        _closeShopArea.OnClick += CloseShop;
     }
 
     private void OnDisable()
@@ -93,6 +107,8 @@ public class GameManager : MonoBehaviour
         _startArea.OnClick -= StartGame;
         _continueArea.OnClick -= ContinueGame;
         _restartArea.OnClick -= RestartGame;
+        _openShopArea.OnClick -= OpenShop;
+        _closeShopArea.OnClick -= CloseShop;
     }
 
     private void Update()
@@ -118,6 +134,9 @@ public class GameManager : MonoBehaviour
     public void PauseGame()
     {
         _gameState = GameState.Paused;
+
+        _playerVisual.DeactivateTrail();
+
         _uiManager.SetActivePauseUI(true);
         _uiManager.SetActivePlayingUI(false);
     }
@@ -125,6 +144,9 @@ public class GameManager : MonoBehaviour
     private void ContinueGame()
     {
         _gameState = GameState.Playing;
+
+        _playerVisual.ActivateTrail();
+
         _uiManager.SetActivePauseUI(false);
         _uiManager.SetActivePlayingUI(true);
     }
@@ -134,6 +156,7 @@ public class GameManager : MonoBehaviour
         _gameState = GameState.GameOver;
 
         _playerVisual.Death();
+        ScoreService.UpdateBestScore();
 
         _uiManager.SetActivePauseUI(false);
         _uiManager.SetActivePlayingUI(false);
@@ -148,7 +171,6 @@ public class GameManager : MonoBehaviour
         LevelService?.ClearLevel();
         SpeedService?.ResetSpeed();
         ScoreService?.ResetScore();
-        ColorService?.ResetColor();
 
         _playerVisual.Revert();
         _playerVisual.DeactivateTrail();
@@ -166,7 +188,6 @@ public class GameManager : MonoBehaviour
                 CameraFollowing();
                 SpeedUpdate();
                 AddScore();
-                UpdateColor();
                 break;
             case GameState.GameOver:
                 _uiManager.PulseGameOverTips();
@@ -179,8 +200,6 @@ public class GameManager : MonoBehaviour
                 break;
         }
     }
-
-    private void UpdateColor() => ColorService?.Update();
 
     private void AddScore() => ScoreService?.Update();
 
@@ -200,6 +219,20 @@ public class GameManager : MonoBehaviour
             _traveledDistance -= _gameConfig.ChunkLength;
             LevelService?.SpawnChunk();
         }
+    }
+
+    private void OpenShop()
+    {
+        if (_gameState != GameState.Menu) return;
+
+        _uiManager.SetActiveMenuUI(false);
+        _uiManager.SetActiveShopUI(true);
+    }
+
+    private void CloseShop()
+    {
+        _uiManager.SetActiveMenuUI(true);
+        _uiManager.SetActiveShopUI(false);
     }
 }
 

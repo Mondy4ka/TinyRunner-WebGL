@@ -1,4 +1,5 @@
 using UnityEngine;
+using YG;
 
 public class ScoreService
 {
@@ -9,9 +10,6 @@ public class ScoreService
         {
             _currentScore = Mathf.Max(value, 0);
             _uiManager.UpdateScoreText(_currentScore);
-
-            if (_currentScore > BestScore)
-                BestScore = _currentScore;
         }
     }
 
@@ -22,6 +20,9 @@ public class ScoreService
         {
             _bestScore = Mathf.Max(value, _bestScore);
             _uiManager.UpdateBestScoreText(_bestScore);
+
+            YG2.saves.BestScore = _bestScore;
+            YG2.SaveProgress();
         }
     }
 
@@ -40,6 +41,8 @@ public class ScoreService
         _uiManager = uiManager;
     }
 
+    public void LoadBestScore(int bestScore) => BestScore = bestScore;
+
     public void Update()
     {
         _additionTimer += Time.deltaTime;
@@ -52,6 +55,12 @@ public class ScoreService
     }
 
     private void AddScore() => CurrentScore += _additionScore;
+
+    public void UpdateBestScore()
+    {
+        if (_currentScore > BestScore)
+            BestScore = _currentScore;
+    }
 
     public void ResetScore()
     {
