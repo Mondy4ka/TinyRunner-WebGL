@@ -36,10 +36,15 @@ public class GameManager : MonoBehaviour
     [Header("UI Settings")]
     [SerializeField] private UIManager _uiManager;
 
+    [Header("Adv Settings")]
+    [SerializeField] private int _restartCountAdv;
+    [SerializeField] private int _coinsOnAdv;
+
 
     private GameState _gameState = GameState.Menu;
 
-    private float _traveledDistance = 0;
+    private int _restartCount;
+    private float _traveledDistance;
 
     private void Awake()
     {
@@ -67,7 +72,7 @@ public class GameManager : MonoBehaviour
             _gameConfig.AdditionScoreTime,
             _uiManager);
 
-        CoinService = new(_uiManager);
+        CoinService = new(_uiManager, _coinsOnAdv);
 
         ShopService = new(_gameConfig.Skins,
             _gameConfig.SkinCellPrefab,
@@ -100,6 +105,7 @@ public class GameManager : MonoBehaviour
         _restartArea.OnClick += RestartGame;
         _openShopArea.OnClick += OpenShop;
         _closeShopArea.OnClick += CloseShop;
+        YG2.onRewardAdv += OnRewardedAdv;
     }
 
     private void OnDisable()
@@ -109,12 +115,15 @@ public class GameManager : MonoBehaviour
         _restartArea.OnClick -= RestartGame;
         _openShopArea.OnClick -= OpenShop;
         _closeShopArea.OnClick -= CloseShop;
+        YG2.onRewardAdv -= OnRewardedAdv;
     }
 
     private void Update()
     {
         OnGameStateHandler();
     }
+
+    public void CallRewardedAdv(string id) => YG2.RewardedAdvShow(id);
 
     private void StartGame()
     {
@@ -141,6 +150,15 @@ public class GameManager : MonoBehaviour
         _uiManager.SetActivePlayingUI(false);
     }
 
+    private void OnRewardedAdv(string id)
+    {
+        if (id != "Continue") return;
+        
+        ContinueGame();
+        _playerVisual.Revert();
+        _uiManager.SetActiveGameOverUI(false);
+    }
+
     private void ContinueGame()
     {
         _gameState = GameState.Playing;
@@ -165,6 +183,8 @@ public class GameManager : MonoBehaviour
 
     public void RestartGame()
     {
+        _restartCount++;
+
         _gameState = GameState.Menu;
         Player?.MoveToStartPoint();
         CameraFollow?.Follow();
@@ -177,6 +197,12 @@ public class GameManager : MonoBehaviour
 
         _uiManager.SetActiveMenuUI(true);
         _uiManager.SetActiveGameUI(false);
+
+        if (_restartCount >= _restartCountAdv)
+        {
+            _restartCount = 0;
+            YG2.InterstitialAdvShow();
+        }
     }
 
     private void OnGameStateHandler()

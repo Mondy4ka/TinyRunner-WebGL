@@ -17,10 +17,17 @@ public class CoinService
     }
 
     private readonly UIManager _uiManager;
+    private readonly int _rewardedAdvCoins;
 
     private int _coins;
 
-    public CoinService(UIManager uiManager) => _uiManager = uiManager;
+    public CoinService(UIManager uiManager, int rewardedAdvCoins)
+    {
+        _uiManager = uiManager;
+        _rewardedAdvCoins = rewardedAdvCoins;
+
+        YG2.onRewardAdv += OnRewardedAdv;
+    }
 
     public void LoadCoins(int coins) => Coins = coins;
 
@@ -33,5 +40,12 @@ public class CoinService
         Coins -= price;
 
         return true;
+    }
+
+    private void OnRewardedAdv(string id)
+    {
+        if (id != "Coins") return;
+
+        Coins += _rewardedAdvCoins;
     }
 }

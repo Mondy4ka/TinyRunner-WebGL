@@ -7,9 +7,18 @@
         false,
         false
     ],
-    "idSave": 11,
-    "Coins": 0,
-    "BestScore": 0,
-    "EquippedSkin": "Skin",
-    "UnlockedSkins": []
+    "idSave": 339,
+    "Coins": 274,
+    "BestScore": 930,
+    "EquippedSkin": "Skin 5",
+    "UnlockedSkins": [
+        "Skin 7",
+        "Skin 1",
+        "Skin 2",
+        "Skin 3",
+        "Skin 4",
+        "Skin 5",
+        "Skin 6",
+        "Skin 8"
+    ]
 }

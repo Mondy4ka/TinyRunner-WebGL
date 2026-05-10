@@ -143,10 +143,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6819d42d49593484598c75ba1b8337c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Chunk
-  _collectables:
-  - {fileID: 626270558207625446}
-  - {fileID: 5068275747981968950}
-  - {fileID: 5565209168723653558}
 --- !u!1 &8972255859067121242
 GameObject:
   m_ObjectHideFlags: 0
@@ -369,17 +365,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 331c5200d396b2a4bb085ec4ff63d825, type: 3}
---- !u!114 &5565209168723653558 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7836311696853035382, guid: 331c5200d396b2a4bb085ec4ff63d825, type: 3}
-  m_PrefabInstance: {fileID: 2448748427722152640}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47e75db61dadfb348870d2f0fdc217e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Collectable
 --- !u!4 &6314942263585805450 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8527738789618961994, guid: 331c5200d396b2a4bb085ec4ff63d825, type: 3}
@@ -442,17 +427,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 331c5200d396b2a4bb085ec4ff63d825, type: 3}
---- !u!114 &5068275747981968950 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7836311696853035382, guid: 331c5200d396b2a4bb085ec4ff63d825, type: 3}
-  m_PrefabInstance: {fileID: 3068651229301747520}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47e75db61dadfb348870d2f0fdc217e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Collectable
 --- !u!4 &6687448761630089482 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8527738789618961994, guid: 331c5200d396b2a4bb085ec4ff63d825, type: 3}
@@ -771,17 +745,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 331c5200d396b2a4bb085ec4ff63d825, type: 3}
---- !u!114 &626270558207625446 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7836311696853035382, guid: 331c5200d396b2a4bb085ec4ff63d825, type: 3}
-  m_PrefabInstance: {fileID: 7237528939380973968}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47e75db61dadfb348870d2f0fdc217e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Collectable
 --- !u!4 &1308369385469472730 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8527738789618961994, guid: 331c5200d396b2a4bb085ec4ff63d825, type: 3}
@@ -921,7 +884,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 537857373392538922, guid: 55bd459c7a040234cbd92bdf5e65ecda, type: 3}
       propertyPath: m_LocalScale.y
-      value: -1
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 537857373392538922, guid: 55bd459c7a040234cbd92bdf5e65ecda, type: 3}
       propertyPath: m_LocalPosition.x
@@ -937,19 +900,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 537857373392538922, guid: 55bd459c7a040234cbd92bdf5e65ecda, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 537857373392538922, guid: 55bd459c7a040234cbd92bdf5e65ecda, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 537857373392538922, guid: 55bd459c7a040234cbd92bdf5e65ecda, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 537857373392538922, guid: 55bd459c7a040234cbd92bdf5e65ecda, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 537857373392538922, guid: 55bd459c7a040234cbd92bdf5e65ecda, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -961,7 +924,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 537857373392538922, guid: 55bd459c7a040234cbd92bdf5e65ecda, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 3244838294491391590, guid: 55bd459c7a040234cbd92bdf5e65ecda, type: 3}
       propertyPath: m_Name

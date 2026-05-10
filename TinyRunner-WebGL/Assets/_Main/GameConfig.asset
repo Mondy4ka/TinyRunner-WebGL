@@ -66,6 +66,10 @@ MonoBehaviour:
   - {fileID: -476935495209893185, guid: 0863d0a2142144a4da8868f5d5718103, type: 3}
   - {fileID: -6340764483177058107, guid: 1785b32cfe127484e8e661b442214265, type: 3}
   - {fileID: -7815209406333941780, guid: 55ee71bc8c4b76844a938f74248e5a57, type: 3}
+  - {fileID: -7815209406333941780, guid: 975b8d2e1fd07ad4eb0059609e9c9a9a, type: 3}
+  - {fileID: -476935495209893185, guid: 08996c15dc6b72c438781c5eafbe3b55, type: 3}
+  - {fileID: -476935495209893185, guid: b430c04c95663f247862a7884e120923, type: 3}
+  - {fileID: 2161257330006893175, guid: f780b6c16ae3e114d9e59e2bf2da87ed, type: 3}
   ChunksRepeat: 1
   AdditionScore: 10
   AdditionScoreTime: 1
