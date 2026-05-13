@@ -10,17 +10,19 @@ public class ShopService
     private readonly Transform _cellsParent;
     private readonly PlayerVisual _playerVisual;
     private readonly CoinService _coinService;
+    private readonly SoundManager _soundManager;
 
     private readonly List<SkinCell> _skinCells = new();
     private SkinCell _currentSelectedCell;
 
-    public ShopService(List<Skin> skinDatas, SkinCell skinCellPrefab, Transform cellsParent, PlayerVisual playerVisual, CoinService coinService)
+    public ShopService(List<Skin> skinDatas, SkinCell skinCellPrefab, Transform cellsParent, PlayerVisual playerVisual, CoinService coinService, SoundManager soundManager)
     {
         _skinDatas = skinDatas;
         _skinCellPrefab = skinCellPrefab;
         _cellsParent = cellsParent;
         _playerVisual = playerVisual;
         _coinService = coinService;
+        _soundManager = soundManager;
     }
 
     public void Initialize()
@@ -60,6 +62,7 @@ public class ShopService
             if (_coinService.TrySpend(cell.SkinData.Price))
             {
                 cell.Unlock();
+                _soundManager.PlayPurchaseSound();
                 YG2.saves.UnlockedSkins.Add(cell.SkinData.name);
             }
             else

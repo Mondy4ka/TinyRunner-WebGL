@@ -6,9 +6,10 @@ public class ScoreService
     public int CurrentScore
     {
         get => _currentScore;
-        private set
+        set
         {
             _currentScore = Mathf.Max(value, 0);
+            _additionTimer = 0;
             _uiManager.UpdateScoreText(_currentScore);
         }
     }
@@ -16,7 +17,7 @@ public class ScoreService
     public int BestScore
     {
         get => _bestScore;
-        private set
+        set
         {
             _bestScore = Mathf.Max(value, _bestScore);
             _uiManager.UpdateBestScoreText(_bestScore);
@@ -41,30 +42,17 @@ public class ScoreService
         _uiManager = uiManager;
     }
 
-    public void LoadBestScore(int bestScore) => BestScore = bestScore;
-
     public void Update()
     {
         _additionTimer += Time.deltaTime;
 
         if (_additionTimer >= _additionTime)
-        {
-            _additionTimer = 0;
             AddScore();
-        }
     }
 
+    public void UpdateBestScore() => BestScore = CurrentScore > BestScore ? CurrentScore : BestScore;
+
+    public void ResetScore() => CurrentScore = 0;
+    
     private void AddScore() => CurrentScore += _additionScore;
-
-    public void UpdateBestScore()
-    {
-        if (_currentScore > BestScore)
-            BestScore = _currentScore;
-    }
-
-    public void ResetScore()
-    {
-        CurrentScore = 0;
-        _additionTimer = 0;
-    }
 }

@@ -8,6 +8,10 @@ public class PlayerVisual : MonoBehaviour
     [SerializeField] private ParticleSystem _deathEffect;
     [SerializeField] private float _pulseSpeed;
 
+    private SoundManager _soundManager;
+
+    public void Initialize(SoundManager soundManager) => _soundManager = soundManager;
+
     public void ActivateTrail() => _trail.Play();
 
     public void DeactivateTrail() => _trail.Stop();
@@ -37,6 +41,12 @@ public class PlayerVisual : MonoBehaviour
     {
         DeactivateTrail();
         Tween.Scale(_spriteRenderer.transform, 0, 0.1f, Ease.InBack)
-            .OnComplete(() => _deathEffect.Play());
+            .OnComplete(PlayDeathEffect);
+    }
+
+    private void PlayDeathEffect()
+    {
+        _deathEffect.Play();
+        _soundManager.PlayDeathSound();
     }
 }

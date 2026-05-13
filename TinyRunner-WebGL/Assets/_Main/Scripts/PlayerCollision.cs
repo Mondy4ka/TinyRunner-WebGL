@@ -51,12 +51,14 @@ public class PlayerCollision : MonoBehaviour
         if (collision.CompareTag("JumpPad"))
         {
             StartCoroutine(_gameManager.Player.Jump());
+            _gameManager.SoundManager.PlayJumpSound();
             return;
         }
 
         if (collision.CompareTag("Coin"))
         {
             _gameManager.CoinService.AddCoins(1);
+            _gameManager.SoundManager.PlayCoinSound();
             return;
         }
     }

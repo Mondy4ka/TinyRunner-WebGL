@@ -158,7 +158,7 @@ MonoBehaviour:
   _spriteRenderer: {fileID: 7425828634439246763}
   _trail: {fileID: 8327901792680730402}
   _deathEffect: {fileID: 7845230804276353723}
-  _pulseSpeed: 1
+  _pulseSpeed: 3
 --- !u!50 &4473857722364424884
 Rigidbody2D:
   serializedVersion: 5

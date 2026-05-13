@@ -4,12 +4,17 @@ using UnityEngine;
 
 public class LevelService
 {
+    private readonly int _activeChunksCount;
     private readonly float _chunkLength;
 
     private readonly List<Chunk> _activeChunks = new();
     private readonly List<Chunk> _deactiveChunks = new();
 
-    public LevelService(float chunkLength) => _chunkLength = chunkLength;
+    public LevelService(float chunkLength, int activeChunksCount)
+    {
+        _chunkLength = chunkLength;
+        _activeChunksCount = activeChunksCount;
+    }
 
     public void Initialize(Chunk[] chunks, int chunkRepeat)
     {
@@ -18,39 +23,37 @@ public class LevelService
             for (int j = 0; j < chunkRepeat; j++)
             {
                 Chunk chunk = Object.Instantiate(chunks[i]);
+
                 chunk.Initialize();
                 chunk.gameObject.SetActive(false);
+
                 _deactiveChunks.Add(chunk);
             }
         }
     }
 
-    public void SpawnChunk()
+    public void SpawnChunk(bool isFirstChunk = false)
     {
-        Vector2 chunkPosition;
+        Vector2 chunkPosition = new(_chunkLength, 0);
 
-        if (_activeChunks.Count > 0)
+        if (isFirstChunk == false)
         {
             chunkPosition = _activeChunks.Last().transform.position;
             chunkPosition.x += _chunkLength;
         }
-        else
-        {
-            chunkPosition = new(_chunkLength, 0);
-        }
 
-        var chunk = GetRandomChunk();
+        Chunk chunk = GetRandomChunk();
         chunk.ResetChunk();
-        chunk.transform.position = chunkPosition;
+        chunk.MoveTo(chunkPosition);
 
-        if (_activeChunks.Count < 5) return;
+        if (_activeChunks.Count <= _activeChunksCount) return;
 
         DeleteLastChunk();
     }
 
     public Chunk GetRandomChunk()
     {
-        var chunk = _deactiveChunks[Random.Range(0, _deactiveChunks.Count)];
+        Chunk chunk = _deactiveChunks[Random.Range(0, _deactiveChunks.Count)];
         chunk.gameObject.SetActive(true);
 
         _deactiveChunks.Remove(chunk);
@@ -61,7 +64,7 @@ public class LevelService
 
     public void DeleteLastChunk()
     {
-        var chunk = _activeChunks[0];
+        Chunk chunk = _activeChunks[0];
         chunk.gameObject.SetActive(false);
 
         _activeChunks.Remove(chunk);

@@ -1,0 +1,116 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00769517adaf79e4f871b16829b8831f, type: 3}
+  m_Name: GameConfig
+  m_EditorClassIdentifier: Assembly-CSharp::GameConfig
+  CameraOffsetX: 3
+  TopYPosition: 0.55
+  DownYPosition: -0.55
+  SwitchAnimationDuration: 0.1
+  SwitchAnimationEase: 27
+  JumpCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.55
+      inSlope: 9.631227
+      outSlope: 9.631227
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.10522981
+    - serializedVersion: 3
+      time: 0.25
+      value: 2
+      inSlope: -0.012983492
+      outSlope: -0.012983492
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.17895375
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.75
+      value: 0.55
+      inSlope: -3.8202262
+      outSlope: -3.8202262
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.041331053
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  JumpDuration: 0.75
+  StartSpeed: 5
+  Acceleration: 0.5
+  AccelerationTime: 5
+  ChunkLength: 20
+  ActiveChunksCount: 5
+  ChunksRepeat: 1
+  Chunks:
+  - {fileID: -8841291816296076925, guid: 01afed1f553fe474fa4d6f819c52cb0e, type: 3}
+  - {fileID: 570099723315500390, guid: 7adc27ddf45317a4a9f94cf154cf3b21, type: 3}
+  - {fileID: 7868950740662867728, guid: fd4f5a7b3d16ae948abfa9f78281de39, type: 3}
+  - {fileID: 2161257330006893175, guid: 236e99aae2c63c54086e3dde61aef7e2, type: 3}
+  - {fileID: 337755606270965896, guid: b6a24fd22e7f5ea46977bafccf0615f9, type: 3}
+  - {fileID: -61599721937295764, guid: 1265562f760fad34ba9cd73d51e3b11b, type: 3}
+  - {fileID: 1787754081598476933, guid: 77ae3134e2406fe43a6953568af1850c, type: 3}
+  - {fileID: -476935495209893185, guid: 0863d0a2142144a4da8868f5d5718103, type: 3}
+  - {fileID: -6340764483177058107, guid: 1785b32cfe127484e8e661b442214265, type: 3}
+  - {fileID: -7815209406333941780, guid: 55ee71bc8c4b76844a938f74248e5a57, type: 3}
+  - {fileID: -7815209406333941780, guid: 975b8d2e1fd07ad4eb0059609e9c9a9a, type: 3}
+  - {fileID: -476935495209893185, guid: 08996c15dc6b72c438781c5eafbe3b55, type: 3}
+  - {fileID: -476935495209893185, guid: b430c04c95663f247862a7884e120923, type: 3}
+  - {fileID: 2161257330006893175, guid: f780b6c16ae3e114d9e59e2bf2da87ed, type: 3}
+  - {fileID: 2161257330006893175, guid: 236e83aa0d3cd8e4e83c7b2943ca0d78, type: 3}
+  - {fileID: 2161257330006893175, guid: b4ed2de6ea93cd7408c62e92ee12fef9, type: 3}
+  - {fileID: 2161257330006893175, guid: b918776e6b8f3e5428b2250750e76ae1, type: 3}
+  - {fileID: 2161257330006893175, guid: 87116e8dd0752c949ab676793731df64, type: 3}
+  - {fileID: 2161257330006893175, guid: 0e39c2798b170404bb6fdbc8c31d1ac4, type: 3}
+  - {fileID: 2161257330006893175, guid: 56a284ecb892d5943b0e7dfa30779186, type: 3}
+  - {fileID: 2161257330006893175, guid: c0c5021998d4bb044bd1494540297570, type: 3}
+  - {fileID: 570099723315500390, guid: 6c0e777648c7f474fbb9ecbbea1dd819, type: 3}
+  - {fileID: 2161257330006893175, guid: 1e8752e02630a3044a9f010de0af4e13, type: 3}
+  AdditionScore: 10
+  AdditionScoreTime: 1
+  Skins:
+  - {fileID: 11400000, guid: 7372e3212ee68fa44badc116b3b95624, type: 2}
+  - {fileID: 11400000, guid: 631b44c234bcae4419befdc94a7bc46e, type: 2}
+  - {fileID: 11400000, guid: 7deaa7e02631aac4e8a889a65c14141d, type: 2}
+  - {fileID: 11400000, guid: b57b75f2929a2aa46a30c3d5c0b72171, type: 2}
+  - {fileID: 11400000, guid: e24b825076034e34481e61a7eadf64f3, type: 2}
+  - {fileID: 11400000, guid: 54af7e918053d824e97b5e4a4c658115, type: 2}
+  - {fileID: 11400000, guid: 3357a0c00965b054e9c8ded60f0f2b4f, type: 2}
+  - {fileID: 11400000, guid: 19058088921ce5e40b17fb8bca09d780, type: 2}
+  - {fileID: 11400000, guid: 7c22faf8cc569a247959d85ec347dd6e, type: 2}
+  - {fileID: 11400000, guid: 6a2d5bb94cf3ba04fb24361f219f9d24, type: 2}
+  - {fileID: 11400000, guid: 78a58eb5954efaf4e9c1baeca69b6bb1, type: 2}
+  - {fileID: 11400000, guid: 462236dc584625347a229200ff6c68d8, type: 2}
+  - {fileID: 11400000, guid: f253c9433f9e77b4397765ed30d8ed82, type: 2}
+  - {fileID: 11400000, guid: d9c60398f8048b54eaf2da6158af0b99, type: 2}
+  - {fileID: 11400000, guid: 1b5cfaf529259034da7faf120d273d73, type: 2}
+  - {fileID: 11400000, guid: 2c4411b7b391aa04bb2af5e124182335, type: 2}
+  - {fileID: 11400000, guid: 6dc824c5e631a844896ffa51f4b32bd6, type: 2}
+  - {fileID: 11400000, guid: d995a9f53ad8dd54d8d7753dd1148cb9, type: 2}
+  - {fileID: 11400000, guid: 3798a32b09ada8349b6b0f07f2f59906, type: 2}
+  - {fileID: 11400000, guid: af2ab222a7e857349aabc145f67957d7, type: 2}
+  - {fileID: 11400000, guid: ef640d6797de95945ab28861d7fb2a07, type: 2}
+  - {fileID: 11400000, guid: 93752b1f140e9734b86c1ac046003071, type: 2}
+  SkinCellPrefab: {fileID: 5778900193430321079, guid: 4f05218fd74b67242ba07bed1e1a8af9, type: 3}
+  SwitchLineSound: {fileID: 8300000, guid: 5a8b5c4d95ec37a43b5aed3e12d4d2e2, type: 3}
+  JumpSound: {fileID: 8300000, guid: 6e21c49073ca87f40a8eb689b076551b, type: 3}
+  CoinSound: {fileID: 8300000, guid: a932e59593440d241a022341a51b81d8, type: 3}
+  DeathSound: {fileID: 8300000, guid: 0712131db2689614fa7315953ce6603f, type: 3}
+  PurchaseSound: {fileID: 8300000, guid: a932e59593440d241a022341a51b81d8, type: 3}
+  RestartCountAdv: 6
+  CoinsRewardAdv: 100

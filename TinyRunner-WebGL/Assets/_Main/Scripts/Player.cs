@@ -18,6 +18,7 @@ public class Player
 
     private readonly InputArea _inputArea;
     private readonly Transform _transform;
+    private readonly SoundManager _soundManager;
 
     private readonly float _topYPosition;
     private readonly float _downYPosition;
@@ -35,7 +36,7 @@ public class Player
     private bool _isJumping;
     private bool _isJumpInterrupted;
 
-    public Player(InputArea inputArea, Transform transform, float topYPosition, float downYPosition, float switchAnimationDuration, Ease switchAnimationEase, AnimationCurve animationCurve, float jumpDuration)
+    public Player(InputArea inputArea, Transform transform, float topYPosition, float downYPosition, float switchAnimationDuration, Ease switchAnimationEase, AnimationCurve animationCurve, float jumpDuration, SoundManager soundManager)
     {
         _inputArea = inputArea;
         _transform = transform;
@@ -45,6 +46,7 @@ public class Player
         _switchAnimationEase = switchAnimationEase;
         _animationCurve = animationCurve;
         _jumpDuration = jumpDuration;
+        _soundManager = soundManager;
     }
 
     public void Initialize()
@@ -89,6 +91,7 @@ public class Player
 
         if (_isBlocked || _isJumping) return;
 
+        _soundManager.PlaySwitchLineSound();
         _isBlocked = true;
 
         float newYPosition = _isTopPosition ? _downYPosition : _topYPosition;

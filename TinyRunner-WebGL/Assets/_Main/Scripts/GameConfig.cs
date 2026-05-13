@@ -25,8 +25,9 @@ public class GameConfig : ScriptableObject
 
     [Header("Level Settings")]
     public float ChunkLength;
-    public Chunk[] Chunks;
+    public int ActiveChunksCount;
     public int ChunksRepeat;
+    public Chunk[] Chunks;
 
     [Header("Score Settings")]
     public int AdditionScore;
@@ -35,4 +36,15 @@ public class GameConfig : ScriptableObject
     [Header("Shop Settings")]
     public List<Skin> Skins;
     public SkinCell SkinCellPrefab;
+
+    [Header("Sound Settings")]
+    public AudioClip SwitchLineSound;
+    public AudioClip JumpSound;
+    public AudioClip CoinSound;
+    public AudioClip DeathSound;
+    public AudioClip PurchaseSound;
+
+    [Header("Adv Settings")]
+    public int RestartCountAdv;
+    public int CoinsRewardAdv;
 }

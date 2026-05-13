@@ -6,7 +6,7 @@ public class CoinService
     public int Coins
     {
         get => _coins;
-        private set
+        set
         {
             _coins = Mathf.Max(value, 0);
             _uiManager.UpdateCoinsText(_coins);
@@ -25,11 +25,11 @@ public class CoinService
     {
         _uiManager = uiManager;
         _rewardedAdvCoins = rewardedAdvCoins;
-
-        YG2.onRewardAdv += OnRewardedAdv;
     }
 
-    public void LoadCoins(int coins) => Coins = coins;
+    public void Initialize() => YG2.onRewardAdv += OnRewardedAdv;
+
+    public void Deinitialize() => YG2.onRewardAdv -= OnRewardedAdv;
 
     public void AddCoins(int count) => Coins += count;
 
@@ -46,6 +46,6 @@ public class CoinService
     {
         if (id != "Coins") return;
 
-        Coins += _rewardedAdvCoins;
+        AddCoins(_rewardedAdvCoins);
     }
 }

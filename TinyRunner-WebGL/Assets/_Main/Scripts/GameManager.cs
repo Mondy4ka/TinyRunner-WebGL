@@ -5,18 +5,21 @@ using YG;
 public class GameManager : MonoBehaviour
 {
     public Player Player { get; private set; }
-    public CameraFollow CameraFollow { get; private set; }
+    public CameraService CameraFollow { get; private set; }
     public SpeedService SpeedService { get; private set; }
     public LevelService LevelService { get; private set; }
     public ScoreService ScoreService { get; private set; }
     public CoinService CoinService { get; private set; }
     public ShopService ShopService { get; private set; }
+    public SoundManager SoundManager { get; private set; }
+    public SaveService SaveService { get; private set; }
 
     [Header("Shop Settings")]
     [SerializeField] private Transform _shopCellsParent;
     [SerializeField] private InputArea _openShopArea;
     [SerializeField] private InputArea _closeShopArea;
 
+    [Header("Game Config")]
     [SerializeField] private GameConfig _gameConfig;
 
     [Header("Camera Settings")]
@@ -36,18 +39,22 @@ public class GameManager : MonoBehaviour
     [Header("UI Settings")]
     [SerializeField] private UIManager _uiManager;
 
-    [Header("Adv Settings")]
-    [SerializeField] private int _restartCountAdv;
-    [SerializeField] private int _coinsOnAdv;
+    [Header("Audio Settings")]
+    [SerializeField] private AudioSource _sfxSource;
 
-
+    private int _restartCount = 0;
+    private float _traveledDistance = 0;
     private GameState _gameState = GameState.Menu;
-
-    private int _restartCount;
-    private float _traveledDistance;
 
     private void Awake()
     {
+        SoundManager = new(_sfxSource,
+            _gameConfig.SwitchLineSound,
+            _gameConfig.JumpSound,
+            _gameConfig.CoinSound,
+            _gameConfig.DeathSound,
+            _gameConfig.PurchaseSound);
+
         Player = new(_inputArea,
             _playerTransform,
             _gameConfig.TopYPosition,
@@ -55,13 +62,14 @@ public class GameManager : MonoBehaviour
             _gameConfig.SwitchAnimationDuration,
             _gameConfig.SwitchAnimationEase,
             _gameConfig.JumpCurve,
-            _gameConfig.JumpDuration);
+            _gameConfig.JumpDuration,
+            SoundManager);
 
         CameraFollow = new(_playerTransform,
             _cameraTransform,
             _gameConfig.CameraOffsetX);
 
-        LevelService = new(_gameConfig.ChunkLength);
+        LevelService = new(_gameConfig.ChunkLength, _gameConfig.ActiveChunksCount);
 
         SpeedService = new(Player,
             _gameConfig.StartSpeed,
@@ -72,19 +80,24 @@ public class GameManager : MonoBehaviour
             _gameConfig.AdditionScoreTime,
             _uiManager);
 
-        CoinService = new(_uiManager, _coinsOnAdv);
+        CoinService = new(_uiManager,
+            _gameConfig.CoinsRewardAdv);
 
         ShopService = new(_gameConfig.Skins,
             _gameConfig.SkinCellPrefab,
             _shopCellsParent,
             _playerVisual,
-            CoinService);
+            CoinService, SoundManager);
+
+        SaveService = new(CoinService, ScoreService, ShopService);
 
         LevelService.Initialize(_gameConfig.Chunks, _gameConfig.ChunksRepeat);
         ShopService.Initialize();
         Player.Initialize();
         Player.SetMoveSpeed(_gameConfig.StartSpeed);
         _playerCollision.Initialize(this);
+        _playerVisual.Initialize(SoundManager);
+        CoinService.Initialize();
 
         StartCoroutine(LoadSaves());
     }
@@ -93,8 +106,8 @@ public class GameManager : MonoBehaviour
     {
         while (YG2.isSDKEnabled == false) yield return null;
 
-        CoinService.LoadCoins(YG2.saves.Coins);
-        ScoreService.LoadBestScore(YG2.saves.BestScore);
+        SaveService.LoadCoins();
+        SaveService.LoadBestScore();
         ShopService.LoadSkins(YG2.saves.UnlockedSkins, YG2.saves.EquippedSkin);
     }
 
@@ -128,7 +141,7 @@ public class GameManager : MonoBehaviour
     private void StartGame()
     {
         _gameState = GameState.Playing;
-        LevelService.SpawnChunk();
+        LevelService.SpawnChunk(true);
         LevelService.SpawnChunk();
 
         _playerVisual.ActivateTrail();
@@ -153,7 +166,7 @@ public class GameManager : MonoBehaviour
     private void OnRewardedAdv(string id)
     {
         if (id != "Continue") return;
-        
+
         ContinueGame();
         _playerVisual.Revert();
         _uiManager.SetActiveGameOverUI(false);
@@ -186,6 +199,7 @@ public class GameManager : MonoBehaviour
         _restartCount++;
 
         _gameState = GameState.Menu;
+        ScoreService.UpdateBestScore();
         Player?.MoveToStartPoint();
         CameraFollow?.Follow();
         LevelService?.ClearLevel();
@@ -198,7 +212,7 @@ public class GameManager : MonoBehaviour
         _uiManager.SetActiveMenuUI(true);
         _uiManager.SetActiveGameUI(false);
 
-        if (_restartCount >= _restartCountAdv)
+        if (_restartCount >= _gameConfig.RestartCountAdv)
         {
             _restartCount = 0;
             YG2.InterstitialAdvShow();
