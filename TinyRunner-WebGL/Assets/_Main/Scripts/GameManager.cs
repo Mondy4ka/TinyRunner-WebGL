@@ -48,6 +48,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+
         SoundManager = new(_sfxSource,
             _gameConfig.SwitchLineSound,
             _gameConfig.JumpSound,
@@ -151,6 +152,7 @@ public class GameManager : MonoBehaviour
         _uiManager.SetActivePauseUI(false);
         _uiManager.SetActivePlayingUI(true);
         _uiManager.SetActiveGameOverUI(false);
+        _uiManager.UpdateScoreText(0);
     }
 
     public void PauseGame()
@@ -211,6 +213,8 @@ public class GameManager : MonoBehaviour
 
         _uiManager.SetActiveMenuUI(true);
         _uiManager.SetActiveGameUI(false);
+        _uiManager.UpdateBestScoreText(ScoreService.BestScore);
+
 
         if (_restartCount >= _gameConfig.RestartCountAdv)
         {
@@ -273,6 +277,8 @@ public class GameManager : MonoBehaviour
     {
         _uiManager.SetActiveMenuUI(true);
         _uiManager.SetActiveShopUI(false);
+
+        _uiManager.UpdateBestScoreText(ScoreService.BestScore);
     }
 }
 

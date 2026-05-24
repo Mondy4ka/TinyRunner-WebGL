@@ -1,8 +1,14 @@
 using TMPro;
 using UnityEngine;
+using YG;
+using YG.LanguageLegacy;
 
 public class UIManager : MonoBehaviour
 {
+    [SerializeField] private LanguageYG _scoreLang;
+    [SerializeField] private LanguageYG _bestScoreLang;
+    [SerializeField] private LanguageYG _coinsLang;
+
     [SerializeField] private TMP_Text _scoreText;
     [SerializeField] private TMP_Text _bestScoreText;
     [SerializeField] private TMP_Text _coinsText;
@@ -56,11 +62,13 @@ public class UIManager : MonoBehaviour
         _startTipText.color = newColor1;
     }
 
-    public void UpdateCoinsText(int coins) => _coinsText.SetText($"Coins: {coins}");
+    private string GetLocalizedText(LanguageYG lang) => YG2.lang == "ru" ? lang.ru : lang.en;
 
-    public void UpdateScoreText(int newScore) => _scoreText.SetText($"Score: {newScore}");
+    public void UpdateCoinsText(int coins) => _coinsText.SetText($"{GetLocalizedText(_coinsLang)}{coins}");
 
-    public void UpdateBestScoreText(int newBestScore) => _bestScoreText.SetText($"Best Score: {newBestScore}");
+    public void UpdateScoreText(int newScore) => _scoreText.SetText($"{GetLocalizedText(_scoreLang)}{newScore}");
+
+    public void UpdateBestScoreText(int newBestScore) => _bestScoreText.SetText($"{GetLocalizedText(_bestScoreLang)}{newBestScore} ");
 
     public void SetActiveMenuUI(bool isActive) => _menuUI.SetActive(isActive);
 

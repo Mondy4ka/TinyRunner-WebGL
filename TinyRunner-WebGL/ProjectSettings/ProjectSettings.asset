@@ -40,7 +40,7 @@ PlayerSettings:
     width: 1
     height: 1
   m_SplashScreenLogos: []
-  m_VirtualRealitySplashScreen: {fileID: 0}
+  m_VirtualRealitySplashScreen: {fileID: 2800000, guid: 7ec56690523431446a22c82f80c07ced, type: 3}
   m_HolographicTrackingLossScreen: {fileID: 0}
   defaultScreenWidth: 1920
   defaultScreenHeight: 1080
@@ -294,11 +294,50 @@ PlayerSettings:
   AndroidAppBundleSizeToValidate: 150
   AndroidReportGooglePlayAppDependencies: 1
   androidSymbolsSizeThreshold: 800
-  m_BuildTargetIcons: []
+  m_BuildTargetIcons:
+  - m_BuildTarget: 
+    m_Icons:
+    - serializedVersion: 2
+      m_Icon: {fileID: 2800000, guid: 7ec56690523431446a22c82f80c07ced, type: 3}
+      m_Width: 128
+      m_Height: 128
+      m_Kind: 0
   m_BuildTargetPlatformIcons:
   - m_BuildTarget: Android
     m_Icons:
     - m_Textures: []
+      m_Width: 192
+      m_Height: 192
+      m_Kind: 0
+      m_SubKind: 
+    - m_Textures: []
+      m_Width: 144
+      m_Height: 144
+      m_Kind: 0
+      m_SubKind: 
+    - m_Textures: []
+      m_Width: 96
+      m_Height: 96
+      m_Kind: 0
+      m_SubKind: 
+    - m_Textures: []
+      m_Width: 72
+      m_Height: 72
+      m_Kind: 0
+      m_SubKind: 
+    - m_Textures: []
+      m_Width: 48
+      m_Height: 48
+      m_Kind: 0
+      m_SubKind: 
+    - m_Textures: []
+      m_Width: 36
+      m_Height: 36
+      m_Kind: 0
+      m_SubKind: 
+    - m_Textures:
+      - {fileID: 2800000, guid: 7ec56690523431446a22c82f80c07ced, type: 3}
+      - {fileID: 2800000, guid: 7ec56690523431446a22c82f80c07ced, type: 3}
       m_Width: 432
       m_Height: 432
       m_Kind: 2
@@ -328,65 +367,41 @@ PlayerSettings:
       m_Height: 81
       m_Kind: 2
       m_SubKind: 
-    - m_Textures: []
+    - m_Textures:
+      - {fileID: 2800000, guid: 7ec56690523431446a22c82f80c07ced, type: 3}
       m_Width: 192
       m_Height: 192
       m_Kind: 1
       m_SubKind: 
-    - m_Textures: []
+    - m_Textures:
+      - {fileID: 0}
       m_Width: 144
       m_Height: 144
       m_Kind: 1
       m_SubKind: 
-    - m_Textures: []
+    - m_Textures:
+      - {fileID: 0}
       m_Width: 96
       m_Height: 96
       m_Kind: 1
       m_SubKind: 
-    - m_Textures: []
+    - m_Textures:
+      - {fileID: 0}
       m_Width: 72
       m_Height: 72
       m_Kind: 1
       m_SubKind: 
-    - m_Textures: []
+    - m_Textures:
+      - {fileID: 0}
       m_Width: 48
       m_Height: 48
       m_Kind: 1
       m_SubKind: 
-    - m_Textures: []
+    - m_Textures:
+      - {fileID: 0}
       m_Width: 36
       m_Height: 36
       m_Kind: 1
-      m_SubKind: 
-    - m_Textures: []
-      m_Width: 192
-      m_Height: 192
-      m_Kind: 0
-      m_SubKind: 
-    - m_Textures: []
-      m_Width: 144
-      m_Height: 144
-      m_Kind: 0
-      m_SubKind: 
-    - m_Textures: []
-      m_Width: 96
-      m_Height: 96
-      m_Kind: 0
-      m_SubKind: 
-    - m_Textures: []
-      m_Width: 72
-      m_Height: 72
-      m_Kind: 0
-      m_SubKind: 
-    - m_Textures: []
-      m_Width: 48
-      m_Height: 48
-      m_Kind: 0
-      m_SubKind: 
-    - m_Textures: []
-      m_Width: 36
-      m_Height: 36
-      m_Kind: 0
       m_SubKind: 
   m_BuildTargetBatching:
   - m_BuildTarget: WebGL
@@ -408,7 +423,8 @@ PlayerSettings:
   openGLRequireES31: 0
   openGLRequireES31AEP: 0
   openGLRequireES32: 0
-  m_TemplateCustomTags: {}
+  m_TemplateCustomTags:
+    PRODUCT_DESCRIPTION: 
   mobileMTRendering:
     Android: 1
     iPhone: 1
@@ -670,7 +686,7 @@ PlayerSettings:
   webGLDebugSymbols: 0
   webGLEmscriptenArgs: 
   webGLModulesDirectory: 
-  webGLTemplate: PROJECT:YandexGames
+  webGLTemplate: APPLICATION:PWA
   webGLAnalyzeBuildSize: 0
   webGLUseEmbeddedResources: 0
   webGLCompressionFormat: 0
@@ -691,24 +707,24 @@ PlayerSettings:
   webWasm2023: 0
   webEnableSubmoduleStrippingCompatibility: 0
   scriptingDefineSymbols:
-    Android: SORTIFY;PLUGIN_YG_2;TMP_YG2;RU_YG2;RewardedAdv_yg;Authorization_yg;Storage_yg;BannerAdv_yg;YandexGamesPlatform_yg;InterstitialAdv_yg;Localization_yg
+    Android: SORTIFY;PLUGIN_YG_2;TMP_YG2;RewardedAdv_yg;Authorization_yg;Storage_yg;BannerAdv_yg;YandexGamesPlatform_yg;InterstitialAdv_yg;Localization_yg;AutoTranslateLangs_yg;EnvirData_yg;RU_YG2
     EmbeddedLinux: SORTIFY
     GameCoreScarlett: SORTIFY
     GameCoreXboxOne: SORTIFY
     Kepler: SORTIFY
-    LinuxHeadlessSimulation: SORTIFY;PLUGIN_YG_2;TMP_YG2;RU_YG2;RewardedAdv_yg;Authorization_yg;Storage_yg;BannerAdv_yg;YandexGamesPlatform_yg;InterstitialAdv_yg;Localization_yg
-    Nintendo Switch: SORTIFY;PLUGIN_YG_2;TMP_YG2;RU_YG2;RewardedAdv_yg;Authorization_yg;Storage_yg;BannerAdv_yg;YandexGamesPlatform_yg;InterstitialAdv_yg;Localization_yg
+    LinuxHeadlessSimulation: SORTIFY;PLUGIN_YG_2;TMP_YG2;RewardedAdv_yg;Authorization_yg;Storage_yg;BannerAdv_yg;YandexGamesPlatform_yg;InterstitialAdv_yg;Localization_yg;AutoTranslateLangs_yg;EnvirData_yg;RU_YG2
+    Nintendo Switch: SORTIFY;PLUGIN_YG_2;TMP_YG2;RewardedAdv_yg;Authorization_yg;Storage_yg;BannerAdv_yg;YandexGamesPlatform_yg;InterstitialAdv_yg;Localization_yg;AutoTranslateLangs_yg;EnvirData_yg;RU_YG2
     Nintendo Switch 2: SORTIFY
-    PS4: SORTIFY;PLUGIN_YG_2;TMP_YG2;RU_YG2;RewardedAdv_yg;Authorization_yg;Storage_yg;BannerAdv_yg;YandexGamesPlatform_yg;InterstitialAdv_yg;Localization_yg
-    PS5: SORTIFY;PLUGIN_YG_2;TMP_YG2;RU_YG2;RewardedAdv_yg;Authorization_yg;Storage_yg;BannerAdv_yg;YandexGamesPlatform_yg;InterstitialAdv_yg;Localization_yg
+    PS4: SORTIFY;PLUGIN_YG_2;TMP_YG2;RewardedAdv_yg;Authorization_yg;Storage_yg;BannerAdv_yg;YandexGamesPlatform_yg;InterstitialAdv_yg;Localization_yg;AutoTranslateLangs_yg;EnvirData_yg;RU_YG2
+    PS5: SORTIFY;PLUGIN_YG_2;TMP_YG2;RewardedAdv_yg;Authorization_yg;Storage_yg;BannerAdv_yg;YandexGamesPlatform_yg;InterstitialAdv_yg;Localization_yg;AutoTranslateLangs_yg;EnvirData_yg;RU_YG2
     QNX: SORTIFY
-    Standalone: SORTIFY;PLUGIN_YG_2;TMP_YG2;RU_YG2;RewardedAdv_yg;Authorization_yg;Storage_yg;BannerAdv_yg;YandexGamesPlatform_yg;InterstitialAdv_yg;Localization_yg
+    Standalone: SORTIFY;PLUGIN_YG_2;TMP_YG2;RewardedAdv_yg;Authorization_yg;Storage_yg;BannerAdv_yg;YandexGamesPlatform_yg;InterstitialAdv_yg;Localization_yg;AutoTranslateLangs_yg;EnvirData_yg;RU_YG2
     VisionOS: SORTIFY
-    WebGL: SORTIFY;PLUGIN_YG_2;TMP_YG2;RU_YG2;RewardedAdv_yg;Authorization_yg;Storage_yg;BannerAdv_yg;YandexGamesPlatform_yg;InterstitialAdv_yg;Localization_yg
-    Windows Store Apps: PLUGIN_YG_2;TMP_YG2;RU_YG2;RewardedAdv_yg;Authorization_yg;Storage_yg;BannerAdv_yg;YandexGamesPlatform_yg;InterstitialAdv_yg;Localization_yg
-    XboxOne: SORTIFY;PLUGIN_YG_2;TMP_YG2;RU_YG2;RewardedAdv_yg;Authorization_yg;Storage_yg;BannerAdv_yg;YandexGamesPlatform_yg;InterstitialAdv_yg;Localization_yg
-    iPhone: PLUGIN_YG_2;TMP_YG2;RU_YG2;RewardedAdv_yg;Authorization_yg;Storage_yg;BannerAdv_yg;YandexGamesPlatform_yg;InterstitialAdv_yg;Localization_yg
-    tvOS: SORTIFY;PLUGIN_YG_2;TMP_YG2;RU_YG2;RewardedAdv_yg;Authorization_yg;Storage_yg;BannerAdv_yg;YandexGamesPlatform_yg;InterstitialAdv_yg;Localization_yg
+    WebGL: SORTIFY;PLUGIN_YG_2;TMP_YG2;RewardedAdv_yg;Authorization_yg;Storage_yg;BannerAdv_yg;YandexGamesPlatform_yg;InterstitialAdv_yg;Localization_yg;AutoTranslateLangs_yg;EnvirData_yg;RU_YG2
+    Windows Store Apps: PLUGIN_YG_2;TMP_YG2;RewardedAdv_yg;Authorization_yg;Storage_yg;BannerAdv_yg;YandexGamesPlatform_yg;InterstitialAdv_yg;Localization_yg;AutoTranslateLangs_yg;EnvirData_yg;RU_YG2
+    XboxOne: SORTIFY;PLUGIN_YG_2;TMP_YG2;RewardedAdv_yg;Authorization_yg;Storage_yg;BannerAdv_yg;YandexGamesPlatform_yg;InterstitialAdv_yg;Localization_yg;AutoTranslateLangs_yg;EnvirData_yg;RU_YG2
+    iPhone: PLUGIN_YG_2;TMP_YG2;RewardedAdv_yg;Authorization_yg;Storage_yg;BannerAdv_yg;YandexGamesPlatform_yg;InterstitialAdv_yg;Localization_yg;AutoTranslateLangs_yg;EnvirData_yg;RU_YG2
+    tvOS: SORTIFY;PLUGIN_YG_2;TMP_YG2;RewardedAdv_yg;Authorization_yg;Storage_yg;BannerAdv_yg;YandexGamesPlatform_yg;InterstitialAdv_yg;Localization_yg;AutoTranslateLangs_yg;EnvirData_yg;RU_YG2
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:
